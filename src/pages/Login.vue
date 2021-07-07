@@ -1,15 +1,30 @@
 <template>
-  <div>
-    <h1>Login</h1>
-  </div>
+  <NavigationLayout :back="true">
+    <LoginForm @submitForm="handleLogin" />
+  </NavigationLayout>
 </template>
 
 <script>
-export default {
+import NavigationLayout from '@/layouts/NavigationLayout'
 
+// forms
+import LoginForm from '@/forms/LoginForm'
+
+export default {
+  name: 'LoginPage',
+  components: {
+    NavigationLayout,
+    LoginForm
+  },
+
+  methods: {
+    handleLogin (e) {
+      this.$router.push('/achievements')
+    }
+  }
 }
 </script>
 
-<style>
+<style scoped lang="scss">
 
 </style>

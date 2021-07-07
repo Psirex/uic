@@ -1,7 +1,7 @@
 <template>
   <NavigationLayout :back="true" :menu="true">
-    <h1>Select A Character</h1>
-    <div>
+    <h1>{{getData.selectCoach}}</h1>
+    <div class="character-box">
       <div
         v-for="(row, index) in rows"
         :key="index"
@@ -22,13 +22,13 @@
       </div>
     </div>
     <div class="continue-button">
-      <ComponentButton @click="nextStep" >Continue</ComponentButton>
+      <ComponentButton @click="buttonHandler" :disabled="!selectedCard">{{getData.continue}}</ComponentButton>
     </div>
   </NavigationLayout>
 </template>
 
 <script>
-import { isFinite, inRange, chunk } from 'lodash'
+import { isFinite, chunk } from 'lodash'
 import NavigationLayout from '@/layouts/NavigationLayout'
 
 import CharacterCard from '@/components/cards/CharacterCard'
@@ -44,6 +44,7 @@ export default {
   },
   data () {
     return {
+      selectedCard: false,
       value: {
         gender: null,
         character: null
@@ -51,49 +52,35 @@ export default {
       cards: {
         gender: [
           {
-            value: 'girl',
-            src: require('@/assets/characters/character-girl-1.png'),
-            text: "Girl"
-          }, {
-            value: 'boy',
-            src: require('@/assets/characters/character-boy-1.png'),
-            text: "Boy"
-          }
-        ],
-        boys: [
-          {
             value: '1',
-            src: require('@/assets/characters/character-boy-1.png'),
-          },
-          {
+            src: require('@/assets/characters/character-girl-1.png')
+          }, {
             value: '2',
-            src: require('@/assets/characters/character-boy-2.png'),
+            src: require('@/assets/characters/character-boy-1.png')
           },
           {
             value: '3',
-            src: require('@/assets/characters/character-boy-3.png'),
-          },
-          {
-            value: '4',
-            src: require('@/assets/characters/character-boy-4.png'),
-          },
-        ],
-        girls: [
-          {
-            value: '1',
-            src: require('@/assets/characters/character-girl-1.png'),
-          },
-          {
-            value: '2',
             src: require('@/assets/characters/character-girl-2.png'),
           },
           {
-            value: '3',
+            value: '4',
+            src: require('@/assets/characters/character-boy-3.png'),
+          },
+          {
+            value: '5',
             src: require('@/assets/characters/character-girl-3.png'),
           },
           {
-            value: '4',
+            value: '6',
+            src: require('@/assets/characters/character-boy-4.png'),
+          },
+          {
+            value: '7',
             src: require('@/assets/characters/character-girl-4.png'),
+          },
+          {
+            value: '8',
+            src: require('@/assets/characters/character-boy-2.png'),
           },
         ]
       }
@@ -118,7 +105,12 @@ export default {
         res = this.cards.girls
       }
       return chunk(res, 2)
+    },
+
+    getData() {
+      return this.$t("message.common")
     }
+
   },
   methods: {
     isCardSelected (value) {
@@ -129,22 +121,22 @@ export default {
       }
     },
     selectCard (value) {
+      this.selectedCard = true
+      this.character = value
       if (this.step === 1) {
         this.value.gender = value
       } else if (this.step === 2) {
         return this.value.character = value
       }
     },
-    nextStep() {
-      if (this.value.gender) {
-        const { currentRoute } = this.$router
-        if (this.step === 1) {
-          this.step = 2
-          this.$router.push({ path: currentRoute.path, query: { step: 2 } })
-        } else {
-          this.$router.push('/select-age')
+    buttonHandler(value) {
+      if (!this.selectedCard) return
+      this.cards.gender.map((element) => {
+        if (element.value === this.character) {
+          this.$store.commit('setCharacter', element.src)
         }
-      }
+      })
+      this.$router.push('/select-age')
     }
   }
 }
@@ -163,7 +155,15 @@ export default {
     }
   }
 
+  .character-box {
+    margin-bottom: 120px;
+  }
+
   .continue-button {
-    margin-top: 100px;
+    width: 300px;
+    margin: auto;
+    position: fixed;
+    bottom: 0px;
+    margin-left: 18px;
   }
 </style>

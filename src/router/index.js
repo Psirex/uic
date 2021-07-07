@@ -7,10 +7,21 @@ import Cards from '@/pages/Cards'
 import Login from '@/pages/Login'
 import SelectCharacter from '@/pages/SelectCharacter'
 import SelectAge from '@/pages/SelectAge'
+import SelectTeam from '@/pages/SelectTeam'
+import Achievements from '@/pages/Achievements'
+import Congrats from '@/pages/Congrats'
+import Questions from '@/pages/Questions'
+import Account from '@/pages/Account'
+import  Course from '@/pages/Course'
+import About from '@/pages/About'
+import Team from '@/pages/Team'
+import Article from '@/pages/Article'
+import Code from '@/pages/Code'
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -46,6 +57,56 @@ export default new Router({
       path: '/select-age',
       name: 'SelectAge',
       component: SelectAge
+    },
+    {
+      path: '/select-team',
+      name: 'SelectTeam',
+      component: SelectTeam
+    },
+    {
+      path: '/achievements',
+      name: 'Achievements',
+      component: Achievements
+    },
+    {
+      path: '/congrats',
+      name: 'Congrats',
+      component: Congrats
+    },
+    {
+      path: '/questions',
+      name: 'Questions',
+      component: Questions
+    },
+    {
+      path: '/account',
+      name: 'Account',
+      component: Account
+    },
+    {
+      path: '/course/:id',
+      name: 'Course',
+      component: Course
+    },
+    {
+      path: '/about',
+      name: 'About',
+      component: About
+    },
+    {
+      path: '/team',
+      name: 'Team',
+      component: Team
+    },
+    {
+      path: '/article',
+      name: 'Article',
+      component: Article
+    },
+    {
+      path: '/code',
+      name: 'Code',
+      component: Code
     }
   ]
 })

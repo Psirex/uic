@@ -1,34 +1,34 @@
 <template>
-  <NavigationLayout :back="true">
+  <NavigationLayout :back="true" :menu="true" :topImage="$store.state.character">
     <div class="container">
       <div class="course_wrapper">
         <img src='@/assets/course_detail.png' class="background">
         <img src="@/assets/heart.png" class="heart">
-        <h1>Cavity Prevention</h1>
+        <h1>{{getI18n.title}}</h1>
         <div class="lvl">LVL 4</div>
         <div class="stats_wrapper">
           <div class="stats">
             <img class="icon" src="@/assets/students.png" alt="students">
             <div class="count">5.8k</div>
-            <div class="name">Students</div>
+            <div class="name">{{getI18n.students}}</div>
           </div>
           <div class="stats">
             <img class="icon" src="@/assets/raiting.png" alt="rating">
             <div class="count">5.0</div>
-            <div class="name">Rating</div>
+            <div class="name">{{getI18n.rating}}</div>
           </div>
           <div class="stats">
             <img class="icon" src="@/assets/lessons.png" alt="lessons">
             <div class="count">11</div>
-            <div class="name">Lessons</div>
+            <div class="name">{{getI18n.lessons}}</div>
           </div>
         </div>
-        <img @click="$router.push('/cards')" class="download" src="@/assets/download_btn.png" alt="btn">
+        <img @click="$router.push('/course/1')" class="download" src="@/assets/download_btn.png" alt="btn">
       </div>
       <v-touch @swipeup="handleSwipeTop">
         <div class="swipe_up">
           <img class="arrow" src="@/assets/swipe_arrow.png" />
-          <p>Swipe up to see course contents</p>
+          <p>{{getI18n.swipe}}</p>
         </div>
       </v-touch>
     </div>
@@ -46,13 +46,19 @@ export default {
   },
   components: {
     NavigationLayout
+  },
+
+  computed: {
+    getI18n() {
+      return this.$t("message.cavityPrevention")
+    }
   }
 }
 </script>
 
 <style scoped lang="scss">
   .course_wrapper {
-    margin-top: 20px;
+    margin-top: 40px;
     position: relative;
     background: #25606B;
     border-radius: 10px;
@@ -136,7 +142,7 @@ export default {
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    margin-top: 60px;
+    margin-top: 40px;
 
     .arrow {
       width: 13px;
@@ -152,5 +158,3 @@ export default {
     }
   }
 </style>
-
-
